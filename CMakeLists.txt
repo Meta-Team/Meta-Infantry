@@ -396,6 +396,12 @@ add_executable(ut_sensors_sound
         dev/debug/Unit_Tests/ut_sensors_sound.cpp
         )
 
+add_executable(ut_acceleration
+        dev/interface/can_interface.cpp
+        dev/module/pid_controller.hpp
+        dev/debug/Unit_Tests/ut_acceleration.cpp
+        )
+
 # --------------------------------------- Param Adjusts ---------------------------------------
 
 # Hero Shoot
