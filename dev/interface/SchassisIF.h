@@ -5,7 +5,7 @@
 #ifndef META_INFANTRY_SCHASSISIF_H
 #define META_INFANTRY_SCHASSISIF_H
 
-#include "/interface/can_interface.h"
+#include "interface/can_interface.h"
 
 class SChassisBase {
 public:
@@ -17,7 +17,7 @@ public:
     };
 };
 
-class SchassisIF: SChassisBase {
+class SchassisIF: public SChassisBase {
 
 public:
 

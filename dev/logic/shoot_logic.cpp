@@ -108,9 +108,9 @@ void ShootLG::StuckDetectorThread::main() {
             waited = true;
         }
 
-        if (ShootSKD::get_loader_target_current() > STUCK_THRESHOLD_CURRENT &&
-            ShootSKD::get_loader_actual_velocity() < STUCK_THRESHOLD_VELOCITY) {
-
+//        if (ShootSKD::get_loader_target_current() > STUCK_THRESHOLD_CURRENT &&
+//            ShootSKD::get_loader_actual_velocity() < STUCK_THRESHOLD_VELOCITY) {
+        if (false){
             shooter_state = STUCK;
             LOG_WARN("Bullet loader stuck");
             ShootSKD::set_loader_target_angle(ShootSKD::get_loader_accumulated_angle() - STUCK_REVERSE_ANGLE);

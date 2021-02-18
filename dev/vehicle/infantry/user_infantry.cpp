@@ -11,12 +11,12 @@ float UserI::gimbal_pc_yaw_sensitivity[3] = {50000, 100000, 150000};  // [Slow, 
 
 float UserI::gimbal_pc_pitch_sensitivity[3] = {20000, 50000, 60000};   // [Slow, Normal, Fast] [degree/s]
 float UserI::gimbal_pitch_min_angle = -10; // down range for pitch [degree]
-float UserI::gimbal_pitch_max_angle = 20; //  up range for pitch [degree]
+float UserI::gimbal_pitch_max_angle = 45; //  up range for pitch [degree]
 
 /// Chassis Config
-float UserI::chassis_v_left_right = 1000.0f;  // [mm/s]
+float UserI::chassis_v_left_right = 1500.0f;  // [mm/s]
 float UserI::chassis_v_forward = 2000.0f;     // [mm/s]
-float UserI::chassis_v_backward = 2000.0f;    // [mm/s]
+float UserI::chassis_v_backward = 2000.0f;    // [mm/s]     nn
 
 float UserI::chassis_pc_shift_ratio = 1.5f;  // 150% when Shift is pressed
 float UserI::chassis_pc_ctrl_ratio = 0.5;    // 50% when Ctrl is pressed
@@ -27,7 +27,7 @@ Remote::key_t UserI::chassis_dodge_switch = Remote::KEY_X;
 float UserI::shoot_launch_left_count = 5;
 float UserI::shoot_launch_right_count = 999;
 
-float UserI::shoot_launch_speed = 5.0f;
+float UserI::shoot_launch_speed = 15.0f;
 
 float UserI::shoot_common_duty_cycle = 0.75;
 
@@ -68,11 +68,11 @@ void UserI::UserThread::main() {
                 // ch0 use right as positive direction, while GimbalLG use CCW (left) as positive direction
 
                 float pitch_target;
-                if (Remote::rc.ch1 > 0) pitch_target = Remote::rc.ch1 * gimbal_pitch_max_angle;
-                else pitch_target = -Remote::rc.ch1 * gimbal_pitch_min_angle;  // GIMBAL_PITCH_MIN_ANGLE is negative
+                if (Remote::rc.ch1 > 0) pitch_target += Remote::rc.ch1 * gimbal_pitch_max_angle *0.001;
+                else pitch_target -= Remote::rc.ch1 * gimbal_pitch_min_angle*0.001;  // GIMBAL_PITCH_MIN_ANGLE is negative
                 // ch1 use up as positive direction, while GimbalLG also use up as positive direction
 
-
+                VAL_CROP(pitch_target, gimbal_pitch_max_angle, gimbal_pitch_min_angle);
                 GimbalLG::set_target(gimbal_yaw_target_angle_, pitch_target);
 
             } else if (Remote::rc.s1 == Remote::S_MIDDLE && Remote::rc.s2 == Remote::S_DOWN) {
@@ -126,7 +126,7 @@ void UserI::UserThread::main() {
                 // Referee client data will be sent by ClientDataSendingThread
 
                 float yaw_delta = -Remote::mouse.x * (yaw_sensitivity * USER_THREAD_INTERVAL / 1000.0f);
-                float pitch_delta = -Remote::mouse.y * (pitch_sensitivity * USER_THREAD_INTERVAL / 1000.0f);
+                float pitch_delta = Remote::mouse.y * (pitch_sensitivity * USER_THREAD_INTERVAL / 1000.0f);
 
 //                ///check if it's necessary to use the auxiliary targeting
 //                if (Remote::key.b){
@@ -173,9 +173,7 @@ void UserI::UserThread::main() {
                 /// Remote - Shoot with Scrolling Wheel
 
                 if (Remote::rc.wheel > 0.5) {  // down
-                    if (ShootLG::get_shooter_state() == ShootLG::STOP) {
-                        ShootLG::shoot(shoot_launch_left_count, shoot_launch_speed);
-                    }
+                    ShootLG::shoot(shoot_launch_left_count, shoot_launch_speed);
                 } else if (Remote::rc.wheel < -0.5) {  // up
                     if (ShootLG::get_shooter_state() == ShootLG::STOP) {
                         ShootLG::shoot(shoot_launch_right_count, shoot_launch_speed);
@@ -217,8 +215,8 @@ void UserI::UserThread::main() {
                 ChassisLG::set_target(Remote::rc.ch2 * chassis_v_left_right,  // Both use right as positive direction
                                       (Remote::rc.ch3 > 0 ?
                                        // FIXME: revert back to common velocity
-                                       Remote::rc.ch3 * 1000 :
-                                       Remote::rc.ch3 * 800)   // Both use up    as positive direction
+                                       Remote::rc.ch3 * 3000 :
+                                       Remote::rc.ch3 * 2500)   // Both use up    as positive direction
                 );
 
             } else if (Remote::rc.s1 == Remote::S_MIDDLE && Remote::rc.s2 == Remote::S_MIDDLE) {

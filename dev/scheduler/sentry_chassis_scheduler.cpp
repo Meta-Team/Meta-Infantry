@@ -44,6 +44,10 @@ void SChassisSKD::set_mode(SChassisSKD::mode_t target_mode) {
     mode = target_mode;
 }
 
+//SChassisSKD::mode_t SChassisSKD::get_mode() {
+//    return mode;
+//}
+
 void SChassisSKD::set_destination(float dist) {
     target_position = dist;
 }

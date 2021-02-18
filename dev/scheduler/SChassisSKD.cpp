@@ -13,6 +13,10 @@ PIDController SChassisSKD::v2i_pid[MOTOR_COUNT];
 
 float SChassisSKD::target_velocity[MOTOR_COUNT];
 SChassisSKD::SKDThread SChassisSKD::skdThread;
+int SChassisSKD::target_current[MOTOR_COUNT];
+float SChassisSKD::w_to_v_ratio_;
+float SChassisSKD::turnL;
+float SChassisSKD::turnR;
 
 void SChassisSKD::start(float wheel_base, float wheel_tread, float wheel_circumference, tprio_t thread_prio) {
     w_to_v_ratio_ = (wheel_base + wheel_tread) / 2.0f / 180.0f * 3.14159f;
@@ -38,16 +42,22 @@ void SChassisSKD::set_target(float vx) {
 void SChassisSKD::SKDThread::main() {
     setName("SChassis_SKD");
     while (!shouldTerminate()) {
-        if(mode == NORMAL_MODE) {
+        if(mode == FORCED_RELAX_MODE) {
             target_current[1] = target_current[0] = 0;
-        } else {
-            target_velocity[0] = target_vx;
-            target_velocity[1] = -target_vx;
+        } else if (mode == NORMAL_MODE){
+            target_velocity[0] = -target_vx;
+            target_velocity[1] = target_vx;
+            for (int i = 0; i<MOTOR_COUNT; i++){
+                target_current[i] = (int)v2i_pid[i].calc(SchassisIF::feedback[i]->actual_velocity, target_velocity[i]);
+            }
+        } else if (mode == GROUND_MODE) {
+            target_velocity[0] = -target_vx* turnL;
+            target_velocity[1] = target_vx*turnR;
             for (int i = 0; i<MOTOR_COUNT; i++){
                 target_current[i] = (int)v2i_pid[i].calc(SchassisIF::feedback[i]->actual_velocity, target_velocity[i]);
             }
         }
-        for(int i = 0; i<NORMAL_MODE; i++) {
+        for(int i = 0; i<MOTOR_COUNT; i++) {
             *SchassisIF::target_current[i] = target_current[i];
         }
         sleep(TIME_MS2I(SKD_THREAD_INTERVAL));

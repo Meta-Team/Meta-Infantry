@@ -16,8 +16,11 @@ public:
         FORCED_RELAX_MODE,         // zero force (Still taking control of ChassisIF. External writing to target currents
         // will leads to conflicts.)
         // NO SUPPORT FOR CHASSIS COORDINATE
-        NORMAL_MODE
+        NORMAL_MODE,
+        GROUND_MODE
     };
+
+    static mode_t mode;
 
     /**
      * Initialize ChassisInterface and this calculator
@@ -41,14 +44,20 @@ public:
      * @param skd_mode
      */
     static void set_mode(mode_t skd_mode);
+
+//    /**
+//     * Set mode of this SKD
+//     */
+//    mode_t get_mode();
     /**
      * Set target values
      * @param vx     Target velocity along the x axis (right) with respect to gimbal coordinate [mm/s]
      */
     static void set_target(float vx);
 
+    static float turnL;
+    static float turnR;
 private:
-    static mode_t mode;
     static float target_vx;
     static PIDController a2v_pid;               // for theta control
     static PIDController v2i_pid[MOTOR_COUNT];  // speed control for each motor

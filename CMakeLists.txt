@@ -170,16 +170,25 @@ target_compile_definitions(HERO PRIVATE HERO)
 target_link_libraries(HERO ${PROJECT_SOURCE_DIR}/dev/interface/ahrs/ahrs_lib.lib)
 
 # Main Program -- SentryLite
-add_executable(SentryLite
+add_executable(SENTRYLITE
+        dev/module/pid_controller.hpp
         dev/interface/can_interface.cpp
         dev/interface/remote_interpreter.cpp
         dev/common/CRC8.cpp
         dev/common/CRC16.cpp
-        dev/module/pid_controller.hpp
+
+        dev/interface/led.cpp
+        dev/interface/buzzer_interface.cpp
+        dev/scheduler/buzzer_scheduler.cpp
 
         dev/interface/SchassisIF.cpp
-        dev/scheduler/SchassisSKD.cpp
-        dev/vehicle/SentryLite/main_sentry_lite.cpp)
+        dev/scheduler/SChassisSKD.cpp
+        dev/vehicle/SentryLite/main_sentry_lite.cpp
+        dev/vehicle/SentryLite/user_sentry.cpp
+
+        )
+target_include_directories(SENTRYLITE PRIVATE dev/vehicle/SentryLite)
+target_compile_definitions(SENTRYLITE PRIVATE SENTRYLITE)
 
 # Main Program -- Sentry
 add_executable(SENTRY

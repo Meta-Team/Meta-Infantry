@@ -127,7 +127,7 @@ private:
 
         static constexpr unsigned STUCK_DETECTOR_INITIAL_WAIT_INTERVAL = 500;  // [ms]
 
-        static constexpr int STUCK_THRESHOLD_CURRENT = 7000;  // lower current to trigger stuck handling [mA]
+        static constexpr int STUCK_THRESHOLD_CURRENT = 5000;  // lower current to trigger stuck handling [mA]
         static constexpr float STUCK_THRESHOLD_VELOCITY = 15;  // upper velocity to trigger stuck handling [degree/s]
 
         static constexpr unsigned STUCK_REVERSE_TIME = 1000;  // time to stay in reverse turing state [ms]
