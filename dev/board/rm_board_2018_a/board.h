@@ -88,7 +88,7 @@
 #define GPIOB_SCL                   6U
 #define GPIOB_USART1_RX                  7U
 #define GPIOB_PIN8                  8U
-#define GPIOB_SDA                   9U
+#define GPIOB_SDA                   9U ///modify here
 #define GPIOB_CLK_IN                10U
 #define GPIOB_PIN11                 11U
 #define GPIOB_CAN2_RX                 12U
@@ -115,7 +115,7 @@
 
 #define GPIOD_CAN1_RX               0U
 #define GPIOD_CAN1_TX               1U
-#define GPIOD_SDIO_CMD                  2U
+#define GPIOD_SDIO_CMD              2U
 #define GPIOD_PIN3                  3U
 #define GPIOD_RESET                 4U
 #define GPIOD_OVER_CURRENT          5U
@@ -132,13 +132,13 @@
 
 #define GPIOE_UART8_RX                  0U
 #define GPIOE_UART8_TX                  1U
-#define GPIOE_IST8310_RST                  2U
+#define GPIOE_IST8310_RST               2U
 #define GPIOE_CS_SPI                3U
 #define GPIOE_PIN4                  4U
 #define GPIOE_PIN5                  5U
 #define GPIOE_PIN6                  6U
-#define GPIOE_UART7_RX                  7U
-#define GPIOE_UART7_TX                  8U
+#define GPIOE_UART7_RX              7U
+#define GPIOE_UART7_TX              8U
 #define GPIOE_PIN9                  9U
 #define GPIOE_PIN10                 10U
 #define GPIOE_LED_RED               11U

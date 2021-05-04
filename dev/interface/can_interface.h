@@ -44,7 +44,7 @@ public:
 
     /**
      * Initialize a can interface
-     * @param driver   Pointer to CAN driver such as &CAND1
+     * @param   driver Pointer to CAN driver such as &CAND1
      */
     CANInterface(CANDriver *driver) :
             can_driver(driver), callback_list_count(0)
@@ -56,8 +56,8 @@ public:
 
     /**
      * Start the CAN driver and the receiving thread
-     * @param feedback_prio   Thread priority of the receiving thread
-     * @return A reference to the created thread
+     * @param   feedback_prio   Thread priority of the receiving thread
+     * @return  A reference to the created thread
      */
     void start(tprio_t feedback_prio, tprio_t send_current_prio);
 

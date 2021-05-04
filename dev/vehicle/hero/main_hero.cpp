@@ -129,11 +129,11 @@ int main() {
     LED::led_on(DEV_BOARD_LED_GIMBAL);  // LED 5 on now
 
 
-    /// Setup ChassisIF
-    ChassisIF::init(&can1, &can2, CHASSIS_MOTOR_CONFIG_);
-    chThdSleepMilliseconds(10);
-    InspectorH::startup_check_chassis_feedback();  // check chassis motors has continuous feedback. Block for 20 ms
-    LED::led_on(DEV_BOARD_LED_CHASSIS);  // LED 6 on now
+//    /// Setup ChassisIF
+//    ChassisIF::init(&can1, &can2, CHASSIS_MOTOR_CONFIG_);
+//    chThdSleepMilliseconds(10);
+//    InspectorH::startup_check_chassis_feedback();  // check chassis motors has continuous feedback. Block for 20 ms
+//    LED::led_on(DEV_BOARD_LED_CHASSIS);  // LED 6 on now
 
 
     /// Setup Red Spot Laser
@@ -160,26 +160,26 @@ int main() {
         GimbalIF::feedback[GimbalIF::PITCH]->last_angle_raw, GimbalIF::feedback[GimbalIF::PITCH]->actual_angle);
 
     /// Start SKDs
-    GimbalSKD::start(&ahrs, GIMBAL_ANGLE_INSTALLATION_MATRIX_, GIMBAL_GYRO_INSTALLATION_MATRIX_,
-                     GIMBAL_YAW_INSTALL_DIRECTION, GIMBAL_PITCH_INSTALL_DIRECTION, THREAD_GIMBAL_SKD_PRIO);
-    GimbalSKD::load_pid_params(GIMBAL_PID_YAW_A2V_PARAMS, GIMBAL_PID_YAW_V2I_PARAMS,
-                               GIMBAL_PID_PITCH_A2V_PARAMS, GIMBAL_PID_PITCH_V2I_PARAMS);
-    GimbalSKD::set_yaw_restriction(GIMBAL_RESTRICT_YAW_MIN_ANGLE, GIMBAL_RESTRICT_YAW_MAX_ANGLE,
-                                   GIMBAL_RESTRICT_YAW_VELOCITY);
+//    GimbalSKD::start(&ahrs, GIMBAL_ANGLE_INSTALLATION_MATRIX_, GIMBAL_GYRO_INSTALLATION_MATRIX_,
+//                     GIMBAL_YAW_INSTALL_DIRECTION, GIMBAL_PITCH_INSTALL_DIRECTION, THREAD_GIMBAL_SKD_PRIO);
+//    GimbalSKD::load_pid_params(GIMBAL_PID_YAW_A2V_PARAMS, GIMBAL_PID_YAW_V2I_PARAMS,
+//                               GIMBAL_PID_PITCH_A2V_PARAMS, GIMBAL_PID_PITCH_V2I_PARAMS);
+//    GimbalSKD::set_yaw_restriction(GIMBAL_RESTRICT_YAW_MIN_ANGLE, GIMBAL_RESTRICT_YAW_MAX_ANGLE,
+//                                   GIMBAL_RESTRICT_YAW_VELOCITY);
 
     ShootSKD::start(SHOOT_BULLET_INSTALL_DIRECTION, ShootSKD::POSITIVE /* of no use */, THREAD_SHOOT_SKD_PRIO);
     ShootSKD::load_pid_params(SHOOT_PID_BULLET_LOADER_A2V_PARAMS, SHOOT_PID_BULLET_LOADER_V2I_PARAMS,
                               SHOOT_PID_BULLET_PLATE_A2V_PARAMS, SHOOT_PID_BULLET_PLATE_V2I_PARAMS,
                               SHOOT_PID_FW_LEFT_V2I_PARAMS, SHOOT_PID_FW_RIGHT_V2I_PARAMS);
 
-    ChassisSKD::start(CHASSIS_WHEEL_BASE, CHASSIS_WHEEL_TREAD, CHASSIS_WHEEL_CIRCUMFERENCE, ChassisSKD::POSITIVE,
-                      CHASSIS_GIMBAL_OFFSET, THREAD_CHASSIS_SKD_PRIO);
-    ChassisSKD::load_pid_params(CHASSIS_FOLLOW_PID_THETA2V_PARAMS, CHASSIS_PID_V2I_PARAMS);
+//    ChassisSKD::start(CHASSIS_WHEEL_BASE, CHASSIS_WHEEL_TREAD, CHASSIS_WHEEL_CIRCUMFERENCE, ChassisSKD::POSITIVE,
+//                      CHASSIS_GIMBAL_OFFSET, THREAD_CHASSIS_SKD_PRIO);
+//    ChassisSKD::load_pid_params(CHASSIS_FOLLOW_PID_THETA2V_PARAMS, CHASSIS_PID_V2I_PARAMS);
 
     /// Start LGs
-    GimbalLG::init();
+    //GimbalLG::init();
     ShootLG::init(SHOOT_DEGREE_PER_BULLET, THREAD_SHOOT_LG_STUCK_DETECT_PRIO, THREAD_SHOOT_BULLET_COUNTER_PRIO);
-    ChassisLG::init(THREAD_CHASSIS_LG_DODGE_PRIO, CHASSIS_DODGE_MODE_THETA, CHASSIS_BIASED_ANGLE);
+    //ChassisLG::init(THREAD_CHASSIS_LG_DODGE_PRIO, CHASSIS_DODGE_MODE_THETA, CHASSIS_BIASED_ANGLE);
 
 
     /// Start Inspector and User Threads

@@ -266,6 +266,10 @@ add_executable(ut_shoot
         dev/module/pid_controller.hpp
         dev/interface/remote_interpreter.cpp)
 
+add_executable(ut_oled
+        dev/debug/Unit_Tests/ut_oled.cpp
+        dev/interface/OLED/oled_trans.cpp)
+
 add_executable(ut_engineer
         dev/debug/Unit_Tests/ut_engineer.cpp
         dev/scheduler/engineer_chassis_skd.cpp

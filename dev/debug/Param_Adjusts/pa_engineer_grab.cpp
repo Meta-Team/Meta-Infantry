@@ -10,7 +10,7 @@
 #include "engineer_grab_skd.h"
 #include "engineer_grab_mech_interface.h"
 #include "remote_interpreter.h"
-#include "vehicle/infantry/vehicle_infantry.h"
+#include "vehicle/sentry/vehicle_sentry.h"
 // Other headers here
 
 using namespace chibios_rt;
@@ -79,7 +79,8 @@ int main(void) {
     can2.start(NORMALPRIO+4, NORMALPRIO+5);
     Shell::start(HIGHPRIO);
     Shell::addCommands(templateShellCommands);
-    EngGrabMechIF::motor_can_config_t CANCONFIG[3] = {{EngGrabMechIF::can_channel_1, 0, CANInterface::M2006}, {EngGrabMechIF::can_channel_1, 1, CANInterface::M2006}, {EngGrabMechIF::can_channel_1, 2, CANInterface::M2006}};
+    EngGrabMechIF::motor_can_config_t CANCONFIG[3] = {{EngGrabMechIF::can_channel_1, 0, CANInterface::M2006}, {EngGrabMechIF::can_channel_1, 1, CANInterface::M2006},
+                                                      {EngGrabMechIF::can_channel_1, 2, CANInterface::M3508}};
     EngGrabMechIF::init(&can1, &can2, CANCONFIG);
     controlThread.start(NORMALPRIO + 1);
     engineerGrabSKD::install_direction direct[2] = {engineerGrabSKD::install_direction::NEGATIVE, engineerGrabSKD::install_direction::POSITIVE};
