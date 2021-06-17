@@ -183,6 +183,8 @@ add_executable(SENTRYLITE
 
         dev/interface/SchassisIF.cpp
         dev/scheduler/SChassisSKD.cpp
+        dev/interface/SGimbalIF.cpp
+        dev/scheduler/SGimbal_scheduler.cpp
         dev/vehicle/SentryLite/main_sentry_lite.cpp
         dev/vehicle/SentryLite/user_sentry.cpp
 

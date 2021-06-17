@@ -15,6 +15,8 @@
 #include "remote_interpreter.h"
 #include "SChassisSKD.h"
 #include "SchassisIF.h"
+#include "SGimbal_scheduler.h"
+#include "SGimbalIF.h"
 
 #include "user_sentry.h"
 #include "vehicle_sentry_lite.h"
@@ -28,7 +30,7 @@ CANInterface can1(&CAND1);
 CANInterface can2(&CAND2);
 
 static SchassisIF::motor_can_config_t CHASSIS_MOTOR_CONFIG_[SchassisIF::MOTOR_COUNT] = CHASSIS_MOTOR_CONFIG;
-
+static SGimbalIF::motor_can_config_t GIMBAL_MOTOR_CONFIG_[SGimbalIF::MOTOR_COUNT] = GIMBAL_MOTOR_CONFIG;
 int main() {
 
     /*** --------------------------- Period 0. Fundamental Setup --------------------------- ***/
@@ -59,10 +61,15 @@ int main() {
     chThdSleepMilliseconds(5);
     LED::led_on(2);
     SchassisIF::init(&can1, &can2, CHASSIS_MOTOR_CONFIG_);
+    SGimbalIF::init(&can1, &can2, GIMBAL_MOTOR_CONFIG_,0);
     chThdSleepMilliseconds(5);
     LED::led_on(3);
     SChassisSKD::start(1, 1, 1, NORMALPRIO);
     SChassisSKD::load_pid_params(CHASSIS_PID_V2I_PARAMS, CHASSIS_PID_V2I_PARAMS);
+
+    SGimbalSKD::start(SGimbalSKD::NEGATIVE,SGimbalSKD::POSITIVE, NORMALPRIO+1);
+    SGimbalSKD::load_pid_params(GIMBAL_PID_YAW_A2V_PARAMS, GIMBAL_PID_YAW_V2I_PARAMS, GIMBAL_PID_PITCH_A2V_PARAMS, GIMBAL_PID_PITCH_V2I_PARAMS);
+    SGimbalSKD::load_shoot_pid_params(SHOOT_PID_BULLET_LOADER_V2I_PARAMS, SHOOT_PID_FW_LEFT_V2I_PARAMS);
     chThdSleepMilliseconds(5);
     LED::led_on(4);
     /// Complete Period 2

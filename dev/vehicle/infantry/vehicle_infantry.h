@@ -125,7 +125,7 @@
 
 #define SHOOT_PID_BULLET_LOADER_A2V_KP 10.0f  // a number large enough, see shoot speed note at ShootSKD
 #define SHOOT_PID_BULLET_LOADER_A2V_KI 0.0f
-#define SHOOT_PID_BULLET_LOADER_A2V_KD 0.0f
+#define SHOOT_PID_BULLET_LOADER_A2V_KD 2.0f
 #define SHOOT_PID_BULLET_LOADER_A2V_I_LIMIT 0.0f
 #define SHOOT_PID_BULLET_LOADER_A2V_OUT_LIMIT 360.0f  // will be replaced, see shoot speed note at ShootSKD
 #define SHOOT_PID_BULLET_LOADER_A2V_PARAMS \

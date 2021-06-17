@@ -7,6 +7,7 @@
 
 #include "remote_interpreter.h"
 #include "SChassisSKD.h"
+#include "SGimbal_scheduler.h"
 
 class UserS {
 public:

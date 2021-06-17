@@ -45,7 +45,7 @@ void SChassisSKD::SKDThread::main() {
         if(mode == FORCED_RELAX_MODE) {
             target_current[1] = target_current[0] = 0;
         } else if (mode == NORMAL_MODE){
-            target_velocity[0] = -target_vx;
+            target_velocity[0] = target_vx;
             target_velocity[1] = target_vx;
             for (int i = 0; i<MOTOR_COUNT; i++){
                 target_current[i] = (int)v2i_pid[i].calc(SchassisIF::feedback[i]->actual_velocity, target_velocity[i]);
